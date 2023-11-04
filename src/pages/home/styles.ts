@@ -2,11 +2,8 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div``;
 export const Content = styled.div`
-  background-color: #fff;
-  height: 500px;
-  width: 1000px;
   border-radius: 8px;
-  margin: 100px auto;
+  height: 400px;
   padding: 16px;
   display: flex;
   align-items: center;
