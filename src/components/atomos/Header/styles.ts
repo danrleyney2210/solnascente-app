@@ -39,6 +39,10 @@ export const Wrapper = styled.div`
       }
     }
   }
+
+  @media (max-width: 1030px) {
+    padding: 0 24px;
+  }
 `;
 
 export const ContentLogo = styled.div`

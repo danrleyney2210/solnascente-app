@@ -10,10 +10,11 @@ export function Template({ children }: props) {
   return (
     <S.Wrapper>
       <Header />
-      <S.Content>
-
-        {children}
-      </S.Content>
+      <S.Container>
+        <S.Content>
+          {children}
+        </S.Content>
+      </S.Container>
       <Footer />
     </S.Wrapper>
   )
