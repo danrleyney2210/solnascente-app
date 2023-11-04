@@ -1,6 +1,11 @@
+import { Header } from '../../components/atomos/Header'
+import * as S from './styles'
+
 
 export function Home() {
   return (
-    <h1>Home</h1>
+    <>
+      <Header />
+    </>
   )
 }
