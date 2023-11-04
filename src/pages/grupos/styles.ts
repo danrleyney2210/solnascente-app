@@ -17,3 +17,9 @@ export const ContentGrupos = styled.div`
     margin-left: 10px;
   }
 `;
+
+export const ContentInputs = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+`;
