@@ -17,9 +17,6 @@ export const Content = styled.div`
   border-radius: 8px;
   margin: 100px auto;
   padding: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
   h2 {
     color: #333;
