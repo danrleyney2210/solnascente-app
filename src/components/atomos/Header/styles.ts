@@ -14,14 +14,28 @@ export const Wrapper = styled.div`
     gap: 1rem;
 
     li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 200ms ease;
+
+      &:hover {
+        svg {
+          fill: #dd002e;
+        }
+
+        a {
+          color: #dd002e;
+          margin-bottom: 0;
+        }
+      }
+
+      svg {
+        fill: #999;
+      }
       a {
         color: #999;
         font-size: 1rem;
-        transition: all 200ms ease;
-
-        &:hover {
-          color: #dd002e;
-        }
       }
     }
   }
@@ -43,7 +57,7 @@ export const ContentInfo = styled.div`
 `;
 
 export const Container = styled.div`
-  max-width: 900px;
+  max-width: 1000px;
   width: 100%;
 
   display: flex;
@@ -52,11 +66,10 @@ export const Container = styled.div`
 `;
 
 export const ContentAvatar = styled.div`
-  margin-left: 25px;
+  margin-left: 45px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 2px;
+  gap: 8px;
   cursor: pointer;
 
   > span {
