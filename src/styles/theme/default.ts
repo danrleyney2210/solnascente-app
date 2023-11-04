@@ -4,7 +4,7 @@ export const defaultTheme = {
   color_primary: "#4db5ff",
   color_primary_variant: "rgba(77, 181, 255, 0.4)",
   color_white: "#fff",
-  color_light: "rgba(255,255,255, 0.6)",
+  color_light: "#000",
   transition: "all 400ms ease",
   container_width_lg: "75%",
   container_width_md: "86%",

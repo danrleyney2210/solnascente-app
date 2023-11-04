@@ -49,7 +49,7 @@ export const GlobalStyle = createGlobalStyle`
   section {
     margin-top: 8rem;
 
-    h2, h5 {
+    h1, h2, h5 {
       text-align: center;;
       color: ${(props) => props.theme.color_light}
     }
@@ -124,14 +124,5 @@ export const GlobalStyle = createGlobalStyle`
       }
     }
   }
-
-
-
-
-
-
-   
-
-
 
 `;

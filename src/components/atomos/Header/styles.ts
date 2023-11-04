@@ -44,6 +44,7 @@ export const Wrapper = styled.div`
 export const ContentLogo = styled.div`
   display: flex;
   align-items: center;
+  cursor: pointer;
 
   svg,
   img {
