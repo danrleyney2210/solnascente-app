@@ -23,3 +23,5 @@ export const ContentInputs = styled.div`
   align-items: center;
   gap: 1rem;
 `;
+
+export const WrapperTable = styled.div``;

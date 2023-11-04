@@ -28,7 +28,7 @@ export const GlobalStyle = createGlobalStyle`
   
   body {
     background-color: ${(props) => props.theme.color_bg};
-    color: ${(props) => props.theme.color_white};
+    color: ${(props) => props.theme.color_light};
     line-height: 1.7;
     background-image: url('../../src/assets/bg-texture.png');
   }
