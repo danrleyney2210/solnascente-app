@@ -1,8 +1,8 @@
 import { InputText } from "../../components/atomos/Form/Input";
-import { Dropdown } from "../../components/atomos/Form/dropdown";
-import { Radio } from "../../components/atomos/Form/radio";
 import { SelectDrop } from "../../components/atomos/Form/selectDrop";
 import { Template } from "../template";
+import { Range } from '../../components/atomos/Form/Range'
+
 import * as S from './styles'
 
 const data = [
@@ -16,12 +16,14 @@ const data = [
 export function Grupos() {
   return (
     <Template title={'Grupos'}>
-      <h2>Grupos</h2>
-      <InputText label="Cota" placeholder="Cota" type="number" />
-      <Radio label="Sol Nascente TIMON" id="timon" name="filial" />
-      <Radio label="Sol Nascente Teresina" id="teresina" name="filial" />
+      <S.ContentInputs>
+        <InputText label="Cota" placeholder="Digite a Cota" type="number" />
+        <SelectDrop label="Produto" options={data} />
+        <Range />
+      </S.ContentInputs>
 
-      <SelectDrop label="Status" options={data} />
+
+
     </Template>
   )
 }
