@@ -1,11 +1,32 @@
+import { useState } from 'react'
 import * as S from './styles'
 
-export function Range() {
+interface IRangeProps {
+  label: string
+}
+
+export function Range({ label }: IRangeProps) {
+  const [value, setValue] = useState(0)
+
   return (
     <S.Wrapper>
-      <div className='value-left'>0</div>
-      <input type="range" min={"0"} max={'78'} step={'1'} />
-      <div className='value-right'>78</div>
+
+      <S.SlideValue value={value} className='sliderValue'>
+        <span>{value}</span>
+      </S.SlideValue>
+      <div className='field'>
+        <span className='value left'>0</span>
+        <input type="range"
+          min={"0"}
+          max={'78'}
+
+          value={value}
+          onChange={(e) => setValue(Number(e.target.value))}
+          step={'1'}
+        />
+        <span className='value right'>78</span>
+      </div>
+      <p>{label}</p>
     </S.Wrapper>
   )
 }
