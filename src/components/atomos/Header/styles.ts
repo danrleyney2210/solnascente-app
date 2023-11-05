@@ -87,6 +87,10 @@ export const ContentAvatar = styled.div`
     font-size: 10px;
     color: #999;
   }
+
+  @media (max-width: 700px) {
+    display: none;
+  }
 `;
 
 export const Avatar = styled.div`

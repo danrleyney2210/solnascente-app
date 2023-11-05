@@ -22,9 +22,6 @@ export function Grupos() {
         <Range label="Parcelas  mínimas" />
         <Range label="Parcelas  máximas" />
       </S.ContentInputs>
-
-
-
     </Template>
   )
 }
