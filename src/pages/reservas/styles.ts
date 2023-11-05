@@ -20,6 +20,8 @@ export const ContentInputs = styled.div`
   }
 
   @media (max-width: 750px) {
-    flex-wrap: wrap;
+    .group {
+      flex-wrap: wrap;
+    }
   }
 `;
