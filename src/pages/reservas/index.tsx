@@ -57,6 +57,10 @@ export function Reservas() {
           </div>
         </div>
       </S.ContentInputs>
+      <br />
+      <div>
+        <p>Falta Insirir tabela aqui...</p>
+      </div>
     </Template>
   )
 }
