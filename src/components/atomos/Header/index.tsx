@@ -1,7 +1,8 @@
-import * as S from './styles'
-import { FaUncharted, FaUsers, FaCrow } from 'react-icons/fa'
-import { AiOutlineUser } from 'react-icons/ai'
-import { useNavigate } from 'react-router-dom'
+import * as S from "./styles";
+import { FaUncharted, FaUsers, FaCrow } from "react-icons/fa";
+import { AiOutlineUser } from "react-icons/ai";
+import { NavLink, useNavigate } from "react-router-dom";
+import { AiFillHome } from "react-icons/ai";
 
 export function Header() {
   const navigate = useNavigate();
@@ -9,23 +10,35 @@ export function Header() {
   return (
     <S.Wrapper>
       <S.Container>
-        <S.ContentLogo onClick={() => navigate('/')}>
-          <FaUncharted fill='#dd002e' size={40} />
+        <S.ContentLogo onClick={() => navigate("/")}>
+          <FaUncharted fill="#dd002e" size={40} />
         </S.ContentLogo>
 
         <S.ContentInfo>
           <ul>
-            <li onClick={() => navigate('/grupos')}>
-              <FaUsers size={22} />
-              <a href="#">Grupos</a>
+            <li>
+              <NavLink to="/">
+                <AiFillHome size={22} />
+                Home
+              </NavLink>
             </li>
-            <li onClick={() => navigate('/reservas')}>
-              <FaCrow size={22} />
-              <a href="#">Reservas</a>
+            <li>
+              <NavLink to="/grupos">
+                <FaUsers size={22} />
+                Grupos
+              </NavLink>
             </li>
-            <li onClick={() => navigate('/usuarios')}>
-              <AiOutlineUser size={22} />
-              <a href="#">Usuários</a>
+            <li>
+              <NavLink to="/reservas">
+                <FaCrow size={22} />
+                Reservas
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/usuarios">
+                <AiOutlineUser size={22} />
+                Usuários
+              </NavLink>
             </li>
           </ul>
 
@@ -36,5 +49,5 @@ export function Header() {
         </S.ContentInfo>
       </S.Container>
     </S.Wrapper>
-  )
+  );
 }

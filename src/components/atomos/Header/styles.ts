@@ -14,28 +14,34 @@ export const Wrapper = styled.div`
     gap: 1rem;
 
     li {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 200ms ease;
+      a {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 200ms ease;
 
-      &:hover {
+        color: #999;
+        font-size: 1rem;
+
+        &:hover {
+          svg {
+            fill: #dd002e;
+          }
+
+          color: #dd002e;
+        }
+
+        svg {
+          fill: #999;
+        }
+      }
+
+      .active {
+        color: #dd002e;
+
         svg {
           fill: #dd002e;
         }
-
-        a {
-          color: #dd002e;
-          margin-bottom: 0;
-        }
-      }
-
-      svg {
-        fill: #999;
-      }
-      a {
-        color: #999;
-        font-size: 1rem;
       }
     }
   }
