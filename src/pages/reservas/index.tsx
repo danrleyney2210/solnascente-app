@@ -27,7 +27,7 @@ const statusReserva = [
 
 const tipoReserva = [
   { value: '1', label: 'Todos' },
-  { value: '2', label: 'Lance Fixo' },
+  { value: '2', label: 'Lance Livre' },
   { value: '3', label: 'Lance Fixo' },
 ]
 
