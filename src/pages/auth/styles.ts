@@ -31,4 +31,5 @@ export const ButtonLogin = styled.button<{ isDisabled: boolean }>`
   padding: 16px;
   width: 300px;
   border-radius: 8px;
+  margin-bottom: 30px;
 `;
