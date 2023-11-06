@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import * as S from "./styles";
+import { CgDetailsMore } from "react-icons/cg";
 
 export type DataTable = {
   numero: string;
@@ -27,7 +28,9 @@ const CustomTable = ({ data, titles }: CustomTableTypes) => {
               <tr key={idx}>
                 <td>{item.numero}</td>
                 <td>{`${item.menoLance} %`}</td>
-                <td>{"Acao"}</td>
+                <td>
+                  <CgDetailsMore size={20} />
+                </td>
               </tr>
             ))}
         </tbody>

@@ -15,6 +15,10 @@ export const WrapperContainer = styled.div`
       grid-template-columns: repeat(3, 1fr);
       text-align: left;
       padding: 12px;
+
+      svg {
+        cursor: pointer;
+      }
     }
 
     tr + tr {
