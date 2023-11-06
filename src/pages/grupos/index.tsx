@@ -70,7 +70,11 @@ export function Grupos() {
       </S.ContentInputs>
 
       <S.WrapperTable>
-        <CustomTable titles={heardsTable} data={dataTable} />
+        <CustomTable
+          titles={heardsTable}
+          data={dataTable}
+          templateColumns="1fr 1fr 1fr"
+        />
       </S.WrapperTable>
     </Template>
   );

@@ -2,41 +2,41 @@ import styled from "styled-components";
 
 export const WrapperContainer = styled.div`
   display: flex;
+`;
 
-  table {
-    flex: 1;
+export const Table = styled.table<{ templateColumns: string }>`
+  flex: 1;
 
-    thead th {
-      color: rgba(0, 0, 0, 0.54);
+  thead th {
+    color: rgba(0, 0, 0, 0.54);
+  }
+
+  tr {
+    display: grid;
+    grid-template-columns: ${(props) => props.templateColumns};
+    text-align: left;
+    padding: 12px;
+
+    svg {
+      cursor: pointer;
     }
+  }
 
-    tr {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      text-align: left;
-      padding: 12px;
+  td:has(> svg) {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
 
-      svg {
-        cursor: pointer;
-      }
-    }
+  tr + tr {
+    border-top: 1px solid #ddd;
+  }
 
-    td:has(> svg) {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
+  tbody td {
+    color: #999;
+  }
 
-    tr + tr {
-      border-top: 1px solid #ddd;
-    }
-
-    tbody td {
-      color: #999;
-    }
-
-    tbody tr:hover {
-      background-color: #fafafa;
-    }
+  tbody tr:hover {
+    background-color: #fafafa;
   }
 `;

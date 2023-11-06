@@ -10,12 +10,13 @@ export type DataTable = {
 export type CustomTableTypes = {
   titles: string[];
   data: DataTable[];
+  templateColumns: string;
 };
 
-const CustomTable = ({ data, titles }: CustomTableTypes) => {
+const CustomTable = ({ data, titles, templateColumns }: CustomTableTypes) => {
   return (
     <S.WrapperContainer>
-      <table>
+      <S.Table templateColumns={templateColumns}>
         <thead>
           <tr>
             {titles?.length &&
@@ -34,7 +35,7 @@ const CustomTable = ({ data, titles }: CustomTableTypes) => {
               </tr>
             ))}
         </tbody>
-      </table>
+      </S.Table>
     </S.WrapperContainer>
   );
 };
