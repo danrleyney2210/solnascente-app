@@ -13,4 +13,12 @@ export const Wrapper = styled.div`
     border-radius: 8px;
     padding: 10px;
   }
+
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
 `;

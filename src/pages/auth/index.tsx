@@ -20,7 +20,7 @@ export function Auth() {
       </S.Header>
 
       <S.Form onSubmit={handleSubmit}>
-        <InputText label={"Codigo da empresa"} />
+        <InputText label={"Codigo da empresa"} type="number" />
         <InputText label={"Usuario"} />
         <InputText label={"Senha"} type="password" />
 
