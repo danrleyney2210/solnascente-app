@@ -14,6 +14,51 @@ const data = [
   { value: "4", label: "Digitadas" },
 ];
 
+const dataTable = [
+  {
+    numero: "42753",
+    menoLance: "1.35",
+  },
+  {
+    numero: "42753",
+    menoLance: "2.63",
+  },
+  {
+    numero: "42753",
+    menoLance: "2.81",
+  },
+  {
+    numero: "42753",
+    menoLance: "2.83",
+  },
+  {
+    numero: "42753",
+    menoLance: "2.94",
+  },
+  {
+    numero: "42753",
+    menoLance: "2.95",
+  },
+  {
+    numero: "42753",
+    menoLance: "3.00",
+  },
+  {
+    numero: "42753",
+    menoLance: "1.35",
+  },
+  {
+    numero: "42753",
+    menoLance: "3.05",
+  },
+  {
+    numero: "42753",
+    menoLance: "3.07",
+  },
+];
+
+const heardsTable = ["Número", "Menor Lance", "Ações"];
+
 export function Grupos() {
   return (
     <Template title={"Grupos"}>
@@ -24,7 +69,7 @@ export function Grupos() {
       </S.ContentInputs>
 
       <S.WrapperTable>
-        <CustomTable />
+        <CustomTable titles={heardsTable} data={dataTable} />
       </S.WrapperTable>
     </Template>
   );
