@@ -21,6 +21,12 @@ export const WrapperContainer = styled.div`
       }
     }
 
+    td:has(> svg) {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
     tr + tr {
       border-top: 1px solid #ddd;
     }

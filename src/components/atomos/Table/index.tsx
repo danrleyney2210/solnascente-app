@@ -29,7 +29,7 @@ const CustomTable = ({ data, titles }: CustomTableTypes) => {
                 <td>{item.numero}</td>
                 <td>{`${item.menoLance} %`}</td>
                 <td>
-                  <CgDetailsMore size={20} />
+                  <CgDetailsMore size={20} title="Detalhes" />
                 </td>
               </tr>
             ))}
