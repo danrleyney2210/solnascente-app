@@ -23,7 +23,6 @@ export const ContentBox = styled.div`
   h2 {
     color: #333;
     opacity: 0.8;
-    margin-left: 10px;
   }
 `;
 
@@ -37,6 +36,5 @@ export const Content = styled.div`
   h2 {
     color: #333;
     opacity: 0.8;
-    margin-left: 10px;
   }
 `;

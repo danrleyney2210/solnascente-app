@@ -22,6 +22,10 @@ export const ContentInputs = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
+
+  @media (max-width: 750px) {
+    flex-wrap: wrap;
+  }
 `;
 
 export const WrapperTable = styled.div``;

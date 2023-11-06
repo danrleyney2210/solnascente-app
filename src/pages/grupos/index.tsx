@@ -65,7 +65,8 @@ export function Grupos() {
       <S.ContentInputs>
         <InputText label="Cota" placeholder="Digite a Cota" type="number" />
         <SelectDrop label="Produto" options={data} />
-        <Range />
+        <Range label="Parcelas  mínimas" />
+        <Range label="Parcelas  máximas" />
       </S.ContentInputs>
 
       <S.WrapperTable>
