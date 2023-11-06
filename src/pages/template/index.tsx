@@ -1,10 +1,10 @@
-import { Footer } from '../../components/atomos/Footer'
-import { Header } from '../../components/atomos/Header'
-import * as S from './styles'
+import { Footer } from "../../components/atomos/Footer";
+import { Header } from "../../components/atomos/Header";
+import * as S from "./styles";
 
 interface props {
   children: React.ReactNode;
-  title: string
+  title: string;
 }
 
 export function Template({ children, title }: props) {
@@ -14,12 +14,10 @@ export function Template({ children, title }: props) {
       <S.Container>
         <S.ContentBox>
           <h2>{title}</h2>
-          <S.Content>
-            {children}
-          </S.Content>
+          <S.Content>{children}</S.Content>
         </S.ContentBox>
       </S.Container>
       <Footer />
     </S.Wrapper>
-  )
+  );
 }
