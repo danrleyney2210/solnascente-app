@@ -4,9 +4,14 @@ import * as S from "./styles";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useEffect, useState } from "react";
 import { InputText } from "../../components/atomos/Form/Input";
+import CustomInput from "../../components/atomos/Form/CustomInput";
 
 export function Auth() {
   const [captcha, setCaptcha] = useState<string | null>("");
+
+  const [code, setCode] = useState("");
+  const [password, setPassword] = useState("");
+  const [user, setUser] = useState("");
 
   function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
@@ -20,9 +25,21 @@ export function Auth() {
       </S.Header>
 
       <S.Form onSubmit={handleSubmit}>
-        <InputText label={"Codigo da empresa"} type="number" />
-        <InputText label={"Usuario"} />
-        <InputText label={"Senha"} type="password" />
+        <CustomInput
+          label="Codigo"
+          value={code}
+          onChange={(e) => setCode(e?.target?.value)}
+        />
+        <CustomInput
+          label="Usuario"
+          value={user}
+          onChange={(e) => setUser(e?.target?.value)}
+        />
+        <CustomInput
+          value={password}
+          label="Senha"
+          onChange={(e) => setPassword(e?.target?.value)}
+        />
 
         <S.WrapperReCAPTCHA>
           <ReCAPTCHA

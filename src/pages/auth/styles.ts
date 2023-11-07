@@ -12,18 +12,15 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 20px 0;
+  margin: 20px auto;
 
-  div:has(> input) {
-    margin-top: 16px;
-    width: 300px;
-  }
+  width: 300px;
+  gap: 16px;
 `;
 
 export const WrapperReCAPTCHA = styled.div`
   display: flex;
   justify-content: center;
-  margin: 20px 0;
 `;
 
 export const ButtonLogin = styled.button<{ isDisabled: boolean }>`
