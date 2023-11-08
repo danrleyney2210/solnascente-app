@@ -1,5 +1,19 @@
 import styled from "styled-components";
 
+export const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`;
+
+export const Content = styled.div`
+  background-color: #fff;
+  width: fit-content;
+  padding: 1rem;
+  border-radius: 8px;
+`;
+
 export const Header = styled.div`
   display: flex;
   width: 100%;

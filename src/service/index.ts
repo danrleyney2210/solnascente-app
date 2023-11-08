@@ -1,10 +1,8 @@
 import { AxiosResponse } from "axios";
 import Api from "../Api";
-import { IAuth } from "../types/auth";
+import { IAuth } from "../context/types";
 
-const basePath = "";
-
-type AuthProps = {
+export type AuthProps = {
   codUsuario: string;
   codEmpresa: string;
   senha: string;
