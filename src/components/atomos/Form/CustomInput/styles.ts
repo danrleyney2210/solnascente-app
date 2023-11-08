@@ -23,8 +23,6 @@ export const LabelText = styled.span<{ isFocus: boolean }>`
   position: absolute;
   left: 10px;
   top: ${({ isFocus }) => (isFocus ? "-10px" : "6px")};
-  /* background-color: ${({ isFocus }) =>
-    isFocus ? "#fff" : "transparent"}; */
   padding: 0 5px;
   font-size: ${({ isFocus }) => (isFocus ? "12px" : "16px")};
 `;

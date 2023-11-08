@@ -42,12 +42,12 @@ export function Auth() {
           onChange={(e) => setPassword(e?.target?.value)}
         />
 
-        <S.WrapperReCAPTCHA>
+        {/* <S.WrapperReCAPTCHA>
           <ReCAPTCHA
             sitekey={process.env.REACT_APP_SITE_KEY}
             onChange={setCaptcha}
           />
-        </S.WrapperReCAPTCHA>
+        </S.WrapperReCAPTCHA> */}
 
         <S.ButtonLogin type="submit" isDisabled={!!!captcha}>
           Continuar
