@@ -1,7 +1,5 @@
 import React from "react";
 
-import { Auth } from "../../pages/auth";
-import { useContextSite } from "../../context/Context";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { Navigate } from "react-router-dom";
 
