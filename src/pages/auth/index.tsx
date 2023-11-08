@@ -18,7 +18,8 @@ export function Auth() {
   }
 
   return (
-    <Template title="Seja bem-vindo">
+    // <Template title="Seja bem-vindo">
+    <>
       <S.Header>
         <FaUncharted fill="#dd002e" size={40} />
         <h2>Login</h2>
@@ -52,6 +53,7 @@ export function Auth() {
           Continuar
         </S.ButtonLogin>
       </S.Form>
-    </Template>
+    </>
+    // </Template>
   );
 }

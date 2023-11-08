@@ -16,13 +16,15 @@ export const LabelWrapper = styled.label`
 `;
 
 export const LabelText = styled.span<{ isFocus: boolean }>`
-  color: #999;
+  color: ${({ isFocus }) => (isFocus ? "#000" : "#999")};
   transition: all 0.1s ease-out;
+  font-weight: ${({ isFocus }) => (isFocus ? "600" : "normal")};
 
   position: absolute;
   left: 10px;
   top: ${({ isFocus }) => (isFocus ? "-10px" : "6px")};
-  background-color: ${({ isFocus }) => (isFocus ? "#fff" : "transparent")};
+  /* background-color: ${({ isFocus }) =>
+    isFocus ? "#fff" : "transparent"}; */
   padding: 0 5px;
   font-size: ${({ isFocus }) => (isFocus ? "12px" : "16px")};
 `;
