@@ -23,10 +23,13 @@ export const WrapperReCAPTCHA = styled.div`
   justify-content: center;
 `;
 
-export const ButtonLogin = styled.button<{ isDisabled: boolean }>`
-  cursor: ${({ isDisabled }) => (isDisabled ? "not-allowed" : "pointer")};
+export const ButtonLogin = styled.button`
+  cursor: pointer;
   padding: 16px;
   width: 300px;
   border-radius: 8px;
   margin-bottom: 30px;
+  /* background-color: #dd002e; */
+  /* color: #fff;
+  font-weight: bold; */
 `;

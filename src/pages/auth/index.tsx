@@ -49,9 +49,7 @@ export function Auth() {
           />
         </S.WrapperReCAPTCHA> */}
 
-        <S.ButtonLogin type="submit" isDisabled={!!!captcha}>
-          Continuar
-        </S.ButtonLogin>
+        <S.ButtonLogin type="submit">Continuar</S.ButtonLogin>
       </S.Form>
     </>
     // </Template>
