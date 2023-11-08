@@ -15,7 +15,7 @@ const Rotas = () => {
       <ContextProvider>
 
         <Routes>
-          <Route path="/login" element={<Auth />} />
+          <Route path="/" element={<Auth />} />
           <Route path="/home" element={<Home />} />
           <Route path="/grupos" element={<Grupos />} />
           <Route path="/reservas" element={<Reservas />} />
