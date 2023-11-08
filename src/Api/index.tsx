@@ -5,8 +5,7 @@ const url = "https://apigate.hondaservicosfinanceiros.com.br";
 const Api = axios.create({
   baseURL: url,
   headers: {
-    Origin: process.env.REACT_APP_AXIOS_ORIGIN,
-    Host: process.env.REACT_APP_AXIOS_HOST,
+    "Content-type": "application/json; charset=UTF-8",
   },
 });
 
