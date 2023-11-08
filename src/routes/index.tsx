@@ -13,7 +13,6 @@ const Rotas = () => {
   return (
     <Router>
       <ContextProvider>
-
         <Routes>
           <Route path="/" element={<Auth />} />
           <Route path="/home" element={<Home />} />
@@ -21,10 +20,6 @@ const Rotas = () => {
           <Route path="/reservas" element={<Reservas />} />
           <Route path="/usuarios" element={<Usuarios />} />
         </Routes>
-
-
-
-
       </ContextProvider>
     </Router>
   );

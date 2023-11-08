@@ -3,6 +3,7 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 import { AuthProps } from "../service";
 import { IAuth } from "./types";
 import { Navigate, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 type ContextSite = {
   isAuth: boolean,
@@ -22,6 +23,7 @@ export function ContextProvider({ children }: Props) {
   const navigate = useNavigate()
 
   function loginAuth(data: IAuth) {
+    toast.success("Login efetuado com sucesso!")
     setIsAuth(true)
     setToken(data)
     navigate('home')
