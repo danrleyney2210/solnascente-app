@@ -17,7 +17,7 @@ export function Header() {
         <S.ContentInfo>
           <ul>
             <li>
-              <NavLink to="/">
+              <NavLink to="/home">
                 <AiFillHome size={22} />
                 Home
               </NavLink>
