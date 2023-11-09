@@ -1,4 +1,4 @@
-import Select, { GroupBase, Props } from "react-select";
+import Select, { GroupBase, Props, StylesConfig } from "react-select";
 import * as S from "./styles";
 
 interface ISelectProps {
