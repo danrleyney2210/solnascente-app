@@ -17,10 +17,9 @@ import { Loading } from "components/atomos/Loading";
 
 
 interface ITable {
-  numero: string,
-  menoLance: string,
+  numero: string;
+  menoLance: string;
 }
-
 
 const data = [
   { value: "1", label: "Finalizado" },
@@ -80,8 +79,6 @@ export type SelectOpitionProps<T> = {
   element: T;
 };
 
-
-
 export function Grupos() {
   const [produtosOptions, setProdutooptions] = useState<
     SelectOpitionProps<Produto>[]
@@ -89,10 +86,10 @@ export function Grupos() {
   const [produto, setProduto] = useState("");
   const [dataToken] = useLocalStorage("@dataToken");
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   function detalhesGrupo() {
-    navigate("/grupos/detalhe")
+    navigate("/grupos/detalhe");
   }
 
   useEffect(() => {
@@ -101,14 +98,12 @@ export function Grupos() {
     if (!codEmpresa) return;
     SolnascenteApi.Catalogos({ codEmpresa })
       .then(({ data }) =>
-        setProdutooptions(catalogoSelectParser(data?.catalogoModelos?.produtos))
+        setProdutooptions(selectParser(data?.catalogoModelos?.produtos))
       )
       .catch((error) => toast.error("Erro na requisicao do catalogo"));
   }, [dataToken]);
 
-  function catalogoSelectParser(
-    data: Produto[]
-  ): SelectOpitionProps<Produto>[] {
+  function selectParser(data: Produto[]): SelectOpitionProps<Produto>[] {
     return data.map((item) => ({
       label: item.dscProduto,
       value: item.idProduto,

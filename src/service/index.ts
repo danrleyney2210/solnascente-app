@@ -3,7 +3,13 @@ import Auth from "../Api/Auth";
 
 import { IAuth } from "../context/types";
 import Api from "../Api/App";
+<<<<<<< HEAD
 import { ICatalogo } from "types/catalogos";
+=======
+import { ICatalogo } from "../types/catalogos";
+import { IListaProdutos } from "../types/listaProdutos";
+import { IdetalheProduto } from "../types/detalheProduto";
+>>>>>>> c34ccdf25ddb4747487e5c6a887a4f1623f29bed
 
 export type AuthProps = {
   codUsuario: string;
@@ -31,5 +37,21 @@ export class SolnascenteApi {
     codEmpresa: string;
   }): Promise<AxiosResponse<ICatalogo>> {
     return Api.get(`${basePath}/catalogos/${codEmpresa}`);
+  }
+
+  static ListaProdutos(): Promise<AxiosResponse<IListaProdutos[]>> {
+    return Api.get(`${basePath}/produtos?especieProduto=MOT`);
+  }
+
+  static GetDetalheProdutoById({
+    codConcessionaria,
+    idProduto,
+  }: {
+    codConcessionaria: string;
+    idProduto: number;
+  }): Promise<AxiosResponse<IdetalheProduto[]>> {
+    return Api.get(
+      `${basePath}/modelos?codConcessionaria=${codConcessionaria}&idProduto=${idProduto}`
+    );
   }
 }
