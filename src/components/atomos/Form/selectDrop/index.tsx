@@ -1,6 +1,5 @@
-import Select, { CommonProps, GroupBase, Props } from "react-select";
+import Select, { GroupBase, Props } from "react-select";
 import * as S from "./styles";
-import type { StateManagerProps } from "react-select/dist/declarations/src/useStateManager";
 
 interface ISelectProps {
   label: string;
