@@ -2,18 +2,16 @@ import React, { useMemo, useState } from "react";
 import * as S from "./styles";
 import { CgDetailsMore } from "react-icons/cg";
 
-export type DataTable = {
-  numero: string;
-  menoLance: string;
-};
 
-export type CustomTableTypes = {
+
+export type CustomTableTypes<T> = {
   titles: string[];
-  data: DataTable[];
+  data: T[];
   templateColumns: string;
+  renderRow: (item: T, index: number) => React.ReactNode;
 };
 
-const CustomTable = ({ data, titles, templateColumns }: CustomTableTypes) => {
+const CustomTable = <T,>({ data, titles, templateColumns, renderRow }: CustomTableTypes<T>) => {
   return (
     <S.WrapperContainer>
       <S.Table templateColumns={templateColumns}>
@@ -24,16 +22,9 @@ const CustomTable = ({ data, titles, templateColumns }: CustomTableTypes) => {
           </tr>
         </thead>
         <tbody>
-          {data?.length &&
-            data.map((item, idx) => (
-              <tr key={idx}>
-                <td>{item.numero}</td>
-                <td>{`${item.menoLance} %`}</td>
-                <td>
-                  <CgDetailsMore size={20} title="Detalhes" />
-                </td>
-              </tr>
-            ))}
+          {data.map((item, idx) => (
+            <tr key={idx}>{renderRow(item, idx)}</tr>
+          ))}
         </tbody>
       </S.Table>
     </S.WrapperContainer>

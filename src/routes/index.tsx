@@ -5,6 +5,7 @@ import { Reservas } from "../pages/reservas";
 import { Usuarios } from "../pages/usuarios";
 import { Grupos } from "../pages/grupos";
 import { Auth } from "../pages/auth";
+import { DetalheGrupo } from "../pages/detalheGrupo";
 
 
 const Rotas = () => {
@@ -17,6 +18,7 @@ const Rotas = () => {
           <Route path="/" element={<Auth />} />
           <Route path="/home" element={<Home />} />
           <Route path="/grupos" element={<Grupos />} />
+          <Route path="/grupos/detalhe" element={<DetalheGrupo />} />
           <Route path="/reservas" element={<Reservas />} />
           <Route path="/usuarios" element={<Usuarios />} />
         </Routes>

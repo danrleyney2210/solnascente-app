@@ -4,8 +4,14 @@ import { Template } from "../template";
 import { Range } from "../../components/atomos/Form/Range";
 
 import * as S from "./styles";
-import { useState } from "react";
 import CustomTable from "../../components/atomos/Table";
+import { CgDetailsMore } from "react-icons/cg";
+
+interface ITable {
+  numero: string,
+  menoLance: string,
+}
+
 
 const data = [
   { value: "1", label: "Finalizado" },
@@ -70,10 +76,19 @@ export function Grupos() {
       </S.ContentInputs>
 
       <S.WrapperTable>
-        <CustomTable
+        <CustomTable<ITable>
           titles={heardsTable}
           data={dataTable}
           templateColumns="1fr 1fr 1fr"
+          renderRow={(item, index) => (
+            <>
+              <td>{item.numero}</td>
+              <td>{`${item.menoLance}`}</td>
+              <td>
+                <CgDetailsMore title="Detalhes" />
+              </td>
+            </>
+          )}
         />
       </S.WrapperTable>
     </Template>
