@@ -1,6 +1,9 @@
 import { AxiosResponse } from "axios";
-import Api from "../Api";
+import Auth from "../Api/Auth";
+
 import { IAuth } from "../context/types";
+import Api from "../Api/App";
+import { ICatalogo } from "../types/catalogos";
 
 export type AuthProps = {
   codUsuario: string;
@@ -10,6 +13,8 @@ export type AuthProps = {
   sistemaOperacional?: string;
 };
 
+const basePath = "/bff-plataforma-vendas/v1";
+
 export class SolnascenteApi {
   static Auth(props: AuthProps): Promise<AxiosResponse<IAuth>> {
     const payload = {
@@ -17,10 +22,14 @@ export class SolnascenteApi {
       sistemaOperacional: "DESKTOP",
       ...props,
     };
-    return Api.post("/bff-plataforma-vendas/v1/login", payload, {
-      headers: {
-        Authorization: process.env.REACT_APP_AXIOS_BASIC_TOKEN,
-      },
-    });
+    return Auth.post(`${basePath}/login`, payload);
+  }
+
+  static Catalogos({
+    codEmpresa,
+  }: {
+    codEmpresa: string;
+  }): Promise<AxiosResponse<ICatalogo>> {
+    return Api.get(`${basePath}/catalogos/${codEmpresa}`);
   }
 }

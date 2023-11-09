@@ -1,19 +1,19 @@
-
-import Select from 'react-select';
-import * as S from './styles'
-
-
+import Select, { GroupBase, Props } from "react-select";
+import * as S from "./styles";
 
 interface ISelectProps {
-  options: { value: string; label: string }[];
-  label: string
+  label: string;
 }
 
-export function SelectDrop({ options, label }: ISelectProps) {
+export function SelectDrop<
+  Option,
+  IsMulti extends boolean = false,
+  Group extends GroupBase<Option> = GroupBase<Option>
+>({ label, ...rest }: Props<Option, IsMulti, Group> & ISelectProps) {
   return (
     <S.Wrapper>
       <label htmlFor="">{label}</label>
-      <Select options={options} />
+      <Select {...rest} />
     </S.Wrapper>
-  )
+  );
 }

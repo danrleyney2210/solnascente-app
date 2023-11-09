@@ -7,20 +7,56 @@ import { Grupos } from "../pages/grupos";
 import { Auth } from "../pages/auth";
 import { DetalheGrupo } from "../pages/detalheGrupo";
 
+import { ProtectedRoute } from "./ProtectedRoute";
 
 const Rotas = () => {
-  const { isAuth } = useContextSite()
+  const { isAuth } = useContextSite();
 
   return (
     <Router>
       <ContextProvider>
         <Routes>
           <Route path="/" element={<Auth />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/grupos" element={<Grupos />} />
-          <Route path="/grupos/detalhe" element={<DetalheGrupo />} />
-          <Route path="/reservas" element={<Reservas />} />
-          <Route path="/usuarios" element={<Usuarios />} />
+          <Route
+            path="/home"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/grupos"
+            element={
+              <ProtectedRoute>
+                <Grupos />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/grupos/detalhe"
+            element={
+              <ProtectedRoute>
+                <DetalheGrupo />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/reservas"
+            element={
+              <ProtectedRoute>
+                <Reservas />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/usuarios"
+            element={
+              <ProtectedRoute>
+                <Usuarios />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </ContextProvider>
     </Router>

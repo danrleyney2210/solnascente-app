@@ -4,23 +4,25 @@ import { useState } from "react";
 import CustomInput from "../../components/atomos/Form/CustomInput";
 import { SolnascenteApi } from "../../service";
 import { useContextSite } from "../../context/Context";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 export function Auth() {
-  const { loginAuth } = useContextSite()
+  const { loginAuth } = useContextSite();
   const [codUsuario, setCodUsuario] = useState("");
   const [codEmpresa, setCodEmpresa] = useState("");
   const [senha, setSenha] = useState("");
 
-  const isDisabled = !(codUsuario && codEmpresa && senha);
+  let isDisabled = !(codUsuario && codEmpresa && senha);
 
   function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
 
-    SolnascenteApi.Auth({ codUsuario, codEmpresa, senha }).then(({ data }) => {
-      loginAuth(data)
-    }
-    );
+    isDisabled = true;
+
+    SolnascenteApi.Auth({ codUsuario, codEmpresa, senha })
+      .then(({ data }) => {
+        loginAuth(data);
+      })
+      .finally(() => (isDisabled = false));
   }
 
   return (
@@ -48,7 +50,7 @@ export function Auth() {
             onChange={(e) => setSenha(e?.target?.value?.trim())}
           />
 
-          <S.ButtonLogin type="submit">
+          <S.ButtonLogin type="submit" disabled={isDisabled}>
             Continuar
           </S.ButtonLogin>
         </S.Form>

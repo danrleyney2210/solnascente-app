@@ -6,6 +6,11 @@ import { Range } from "../../components/atomos/Form/Range";
 import * as S from "./styles";
 import CustomTable from "../../components/atomos/Table";
 import { CgDetailsMore } from "react-icons/cg";
+import { Produto } from "../../types/catalogos";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { useEffect, useState } from "react";
+import { SolnascenteApi } from "../../service";
+import { toast } from "react-toastify";
 
 interface ITable {
   numero: string,
@@ -65,12 +70,51 @@ const dataTable = [
 
 const heardsTable = ["Número", "Menor Lance", "Ações"];
 
+export type SelectOpitionProps<T> = {
+  value: any;
+  label: string;
+  element: T;
+};
+
 export function Grupos() {
+  const [produtosOptions, setProdutooptions] = useState<
+    SelectOpitionProps<Produto>[]
+  >([] as SelectOpitionProps<Produto>[]);
+  const [produto, setProduto] = useState("");
+  const [dataToken] = useLocalStorage("@dataToken");
+
+  useEffect(() => {
+    const codEmpresa = dataToken?.retorno?.codEmpresa;
+
+    if (!codEmpresa) return;
+    SolnascenteApi.Catalogos({ codEmpresa })
+      .then(({ data }) =>
+        setProdutooptions(catalogoSelectParser(data?.catalogoModelos?.produtos))
+      )
+      .catch((error) => toast.error("Erro na requisicao do catalogo"));
+  }, [dataToken]);
+
+  function catalogoSelectParser(
+    data: Produto[]
+  ): SelectOpitionProps<Produto>[] {
+    return data.map((item) => ({
+      label: item.dscProduto,
+      value: item.idProduto,
+      element: item,
+    }));
+  }
+
   return (
     <Template title={"Grupos"}>
       <S.ContentInputs>
         <InputText label="Cota" placeholder="Digite a Cota" type="number" />
-        <SelectDrop label="Produto" options={data} />
+        <SelectDrop
+          label="Produto"
+          options={produtosOptions}
+          isClearable
+          value={produtosOptions.find((item) => item.value === produto)}
+          onChange={(e) => setProduto(e?.value)}
+        />
         <Range label="Parcelas  mínimas" />
         <Range label="Parcelas  máximas" />
       </S.ContentInputs>
