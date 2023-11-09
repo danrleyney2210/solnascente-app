@@ -3,13 +3,9 @@ import Auth from "../Api/Auth";
 
 import { IAuth } from "../context/types";
 import Api from "../Api/App";
-<<<<<<< HEAD
 import { ICatalogo } from "types/catalogos";
-=======
-import { ICatalogo } from "../types/catalogos";
-import { IListaProdutos } from "../types/listaProdutos";
-import { IdetalheProduto } from "../types/detalheProduto";
->>>>>>> c34ccdf25ddb4747487e5c6a887a4f1623f29bed
+import { IListaProdutos } from "types/listaProdutos";
+import { IdetalheProduto } from "types/detalheProduto";
 
 export type AuthProps = {
   codUsuario: string;
