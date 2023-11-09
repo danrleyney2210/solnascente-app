@@ -11,6 +11,7 @@ import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useEffect, useState } from "react";
 import { SolnascenteApi } from "../../service";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 interface ITable {
   numero: string,
@@ -76,12 +77,20 @@ export type SelectOpitionProps<T> = {
   element: T;
 };
 
+
+
 export function Grupos() {
   const [produtosOptions, setProdutooptions] = useState<
     SelectOpitionProps<Produto>[]
   >([] as SelectOpitionProps<Produto>[]);
   const [produto, setProduto] = useState("");
   const [dataToken] = useLocalStorage("@dataToken");
+
+  const navigate = useNavigate()
+
+  function detalhesGrupo() {
+    navigate("/grupos/detalhe")
+  }
 
   useEffect(() => {
     const codEmpresa = dataToken?.retorno?.codEmpresa;
@@ -128,7 +137,7 @@ export function Grupos() {
             <>
               <td>{item.numero}</td>
               <td>{`${item.menoLance}`}</td>
-              <td>
+              <td onClick={() => detalhesGrupo()}>
                 <CgDetailsMore title="Detalhes" />
               </td>
             </>

@@ -87,7 +87,7 @@ const dataTable = [
   },
 ];
 
-const heardsTable = ["Data", "Cota-R-D", "Vendedor", "Concessionária"];
+const heardsTable = ["Data", "Cota-R-D", "Vendedor", "Concessionária", "Ações"];
 
 export function DetalheGrupo() {
   return (
