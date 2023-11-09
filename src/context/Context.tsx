@@ -12,11 +12,14 @@ import { AuthProps } from "../service";
 import { IAuth } from "./types";
 import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Loading } from "components/atomos/Loading";
 
 type ContextSite = {
   isAuth: boolean;
   setIsAuth: Dispatch<SetStateAction<boolean>>;
   loginAuth: (data: IAuth) => void;
+  isLoad: boolean;
+  setIsLoad: Dispatch<SetStateAction<boolean>>;
 };
 
 type Props = {
@@ -26,6 +29,7 @@ type Props = {
 export const Context = createContext({} as ContextSite);
 
 export function ContextProvider({ children }: Props) {
+  const [isLoad, setIsLoad] = useState(false)
   const [isAuth, setIsAuth] = useState(false);
   const [token, setToken] = useLocalStorage("@token");
   const [dataToken, setDataToken] = useLocalStorage("@dataToken");
@@ -39,7 +43,7 @@ export function ContextProvider({ children }: Props) {
     navigate("home");
   }
 
-  useEffect(() => {}, [token]);
+  useEffect(() => { }, [token]);
 
   return (
     <Context.Provider
@@ -47,9 +51,12 @@ export function ContextProvider({ children }: Props) {
         isAuth,
         setIsAuth,
         loginAuth,
+        isLoad,
+        setIsLoad
       }}
     >
       {children}
+      {isLoad && <Loading />}
     </Context.Provider>
   );
 }

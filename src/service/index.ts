@@ -3,7 +3,7 @@ import Auth from "../Api/Auth";
 
 import { IAuth } from "../context/types";
 import Api from "../Api/App";
-import { ICatalogo } from "../types/catalogos";
+import { ICatalogo } from "types/catalogos";
 
 export type AuthProps = {
   codUsuario: string;
