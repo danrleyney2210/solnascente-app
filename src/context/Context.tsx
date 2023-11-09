@@ -1,4 +1,12 @@
-import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { AuthProps } from "../service";
 import { IAuth } from "./types";
@@ -6,9 +14,9 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 type ContextSite = {
-  isAuth: boolean,
-  setIsAuth: Dispatch<SetStateAction<boolean>>
-  loginAuth: (data: IAuth) => void
+  isAuth: boolean;
+  setIsAuth: Dispatch<SetStateAction<boolean>>;
+  loginAuth: (data: IAuth) => void;
 };
 
 type Props = {
@@ -18,26 +26,32 @@ type Props = {
 export const Context = createContext({} as ContextSite);
 
 export function ContextProvider({ children }: Props) {
-  const [isAuth, setIsAuth] = useState(false)
-  const [token, setToken] = useLocalStorage('@token')
-  const navigate = useNavigate()
+  const [isAuth, setIsAuth] = useState(false);
+  const [token, setToken] = useLocalStorage("@token");
+  const [dataToken, setDataToken] = useLocalStorage("@dataToken");
+  const navigate = useNavigate();
 
   function loginAuth(data: IAuth) {
-    toast.success("Login efetuado com sucesso!")
-    setIsAuth(true)
-    setToken(data)
-    navigate('home')
+    toast.success("Login efetuado com sucesso!");
+    setIsAuth(true);
+    setToken(data.retorno.tokenDigital);
+    setDataToken(data);
+    navigate("home");
   }
 
-  useEffect(() => {
+  useEffect(() => {}, [token]);
 
-  }, [token])
-
-  return <Context.Provider value={{
-    isAuth,
-    setIsAuth,
-    loginAuth
-  }}>{children}</Context.Provider>;
+  return (
+    <Context.Provider
+      value={{
+        isAuth,
+        setIsAuth,
+        loginAuth,
+      }}
+    >
+      {children}
+    </Context.Provider>
+  );
 }
 
 export function useContextSite() {

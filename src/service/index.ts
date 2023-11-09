@@ -30,6 +30,6 @@ export class SolnascenteApi {
   }: {
     codEmpresa: string;
   }): Promise<AxiosResponse<ICatalogo>> {
-    return Api.post(`${basePath}/catalogos${codEmpresa}`);
+    return Api.get(`${basePath}/catalogos/${codEmpresa}`);
   }
 }
