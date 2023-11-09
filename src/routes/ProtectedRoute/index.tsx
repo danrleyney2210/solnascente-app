@@ -5,7 +5,7 @@ import { Navigate } from "react-router-dom";
 
 export const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
   // const { isAuth } = useContextSite();
-  const [token, setToken] = useLocalStorage("@token");
+  const [token] = useLocalStorage("@token");
 
   return token ? children : <Navigate to={"/"} />;
 };
