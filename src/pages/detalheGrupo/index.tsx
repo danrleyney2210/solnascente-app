@@ -8,10 +8,10 @@ import { Radio } from "../../components/atomos/Form/radio";
 import { Button } from "../../components/atomos/Button";
 import { useEffect, useState } from "react";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
-import { SolnascenteApi } from "../../service";
-import { IListaProdutos } from "../../types/listaProdutos";
+import { HondaVendaDigital } from "../../service/hondaVendaDigital";
 import { SelectOpitionProps } from "../grupos";
 import { IdetalheProduto } from "../../types/detalheProduto";
+import { useContextSite } from "context/Context";
 
 interface ITable {
   date: string;
@@ -19,13 +19,6 @@ interface ITable {
   vendedor: string;
   concessionaria: string;
 }
-
-// const data = [
-//   { value: "1", label: "Finalizado" },
-//   { value: "2", label: "Pendente" },
-//   { value: "3", label: "Cancelado" },
-//   { value: "4", label: "Digitadas" },
-// ];
 
 const dataTable = [
   {
@@ -93,16 +86,20 @@ const dataTable = [
 const heardsTable = ["Data", "Cota-R-D", "Vendedor", "Concessionária", "Ações"];
 
 export function DetalheGrupo() {
-  const [loading, setLoading] = useState(true);
+  const { setIsLoad } = useContextSite();
   const [dataToken] = useLocalStorage("@dataToken");
   const [idsProdutos, setIdsProdutos] = useState<number[]>([]);
-  const [listaProdutos, setListaProdutos] = useState<IdetalheProduto[][]>([]);
+  const [produtoSelecionado, setProdutoSelecionado] = useState("");
+  const [listaProdutosCompleta, setListaProdutosCompleta] = useState<
+    IdetalheProduto[][]
+  >([]);
   const [listaProdutosOptions, setListaProdutosOptions] = useState<
     SelectOpitionProps<IdetalheProduto>[]
   >([]);
 
   useEffect(() => {
-    SolnascenteApi.ListaProdutos().then(({ data }) => {
+    setIsLoad(true);
+    HondaVendaDigital.ListaProdutos().then(({ data }) => {
       setIdsProdutos(data.map((item) => item.idProduto));
     });
   }, []);
@@ -111,7 +108,7 @@ export function DetalheGrupo() {
     if (!idsProdutos?.length || !dataToken?.retorno?.codEmpresa) return;
     Promise.allSettled(
       idsProdutos.map((id) =>
-        SolnascenteApi.GetDetalheProdutoById({
+        HondaVendaDigital.GetDetalheProdutoById({
           idProduto: +id,
           codConcessionaria: dataToken?.retorno?.codEmpresa,
         })
@@ -122,20 +119,21 @@ export function DetalheGrupo() {
           .map((item) => item.status === "fulfilled" && item?.value?.data)
           .filter((item) => typeof item !== "boolean")
       )
-      .then((data) => setListaProdutos(data as IdetalheProduto[][]));
+      .then((data) => setListaProdutosCompleta(data as IdetalheProduto[][]))
+      .finally(() => setIsLoad(false));
   }, [idsProdutos, dataToken]);
 
   useEffect(() => {
-    if (!listaProdutos.length) return;
+    if (!listaProdutosCompleta.length) return;
 
     let temp: IdetalheProduto[] = [];
-    listaProdutos.forEach((e) => temp.push(...e));
+    listaProdutosCompleta.forEach((e) => temp.push(...e));
     const mySet = new Set();
     selectParser(temp).forEach((item) => mySet.add(JSON.stringify(item)));
 
     const listaUnicos = [...mySet].map((item) => JSON.parse(item as string));
     setListaProdutosOptions(listaUnicos);
-  }, [listaProdutos]);
+  }, [listaProdutosCompleta]);
 
   function selectParser(
     data: IdetalheProduto[]
@@ -151,10 +149,18 @@ export function DetalheGrupo() {
     <Template title={"Detalhe do Grupo / Reserva"}>
       <S.ContentInputs>
         <div className="group-select">
-          <Radio label="SOL NASCENTE TIOMN" name="sol" id="1" />
+          <Radio label="SOL NASCENTE TIMON" name="sol" id="1" />
           <Radio label="SOL NASCENTE TERESINA" name="sol" id="2" />
         </div>
-        <SelectDrop label="Produto" options={listaProdutosOptions} />
+        <SelectDrop
+          label="Produto"
+          isClearable
+          options={listaProdutosOptions}
+          value={listaProdutosOptions?.find(
+            (item) => item.value === produtoSelecionado
+          )}
+          onChange={(e) => setProdutoSelecionado(e?.value)}
+        />
         <S.ContentButton>
           <span>Ações</span>
           <S.ContentBtn>

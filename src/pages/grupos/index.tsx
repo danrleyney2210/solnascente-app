@@ -9,12 +9,11 @@ import { CgDetailsMore } from "react-icons/cg";
 
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useEffect, useState } from "react";
-import { SolnascenteApi } from "../../service";
+import { HondaVendaDigital } from "../../service/hondaVendaDigital";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Produto } from "types/catalogos";
 import { Loading } from "components/atomos/Loading";
-
 
 interface ITable {
   numero: string;
@@ -96,7 +95,7 @@ export function Grupos() {
     const codEmpresa = dataToken?.retorno?.codEmpresa;
 
     if (!codEmpresa) return;
-    SolnascenteApi.Catalogos({ codEmpresa })
+    HondaVendaDigital.Catalogos({ codEmpresa })
       .then(({ data }) =>
         setProdutooptions(selectParser(data?.catalogoModelos?.produtos))
       )
@@ -142,8 +141,6 @@ export function Grupos() {
           )}
         />
       </S.WrapperTable>
-
-
     </Template>
   );
 }

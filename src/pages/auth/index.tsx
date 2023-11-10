@@ -2,8 +2,9 @@ import { FaUncharted } from "react-icons/fa";
 import * as S from "./styles";
 import { useState } from "react";
 import CustomInput from "../../components/atomos/Form/CustomInput";
-import { SolnascenteApi } from "../../service";
+import { HondaVendaDigital } from "../../service/hondaVendaDigital";
 import { useContextSite } from "../../context/Context";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export function Auth() {
   const { loginAuth } = useContextSite();
@@ -11,14 +12,20 @@ export function Auth() {
   const [codEmpresa, setCodEmpresa] = useState("");
   const [senha, setSenha] = useState("");
 
-  let isDisabled = !(codUsuario && codEmpresa && senha);
+  const [captcha, setCaptcha] = useState<string | null>("");
+
+  let isDisabled = !(codUsuario && codEmpresa && senha && captcha);
 
   function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
 
+    console.log(captcha);
+
+    return;
+
     isDisabled = true;
 
-    SolnascenteApi.Auth({ codUsuario, codEmpresa, senha })
+    HondaVendaDigital.Auth({ codUsuario, codEmpresa, senha })
       .then(({ data }) => {
         loginAuth(data);
       })
@@ -48,6 +55,11 @@ export function Auth() {
             value={senha}
             label="Senha"
             onChange={(e) => setSenha(e?.target?.value?.trim())}
+          />
+
+          <ReCAPTCHA
+            sitekey={process.env.REACT_APP_SITE_KEY}
+            onChange={(e) => setCaptcha(e)}
           />
 
           <S.ButtonLogin type="submit" disabled={isDisabled}>

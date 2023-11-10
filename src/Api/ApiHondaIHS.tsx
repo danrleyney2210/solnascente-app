@@ -1,13 +1,13 @@
 import axios from "axios";
 
-const Api = axios.create({
-  baseURL: process.env.REACT_APP_APP_URL,
+const ApiHondaIHS = axios.create({
+  baseURL: process.env.REACT_APP_IHS_URL,
   headers: {
     "Content-type": "application/json; charset=UTF-8",
   },
 });
 
-Api.interceptors.request.use(
+ApiHondaIHS.interceptors.request.use(
   (config) => {
     let token;
     if (typeof window !== "undefined") {
@@ -28,4 +28,4 @@ Api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-export default Api;
+export default ApiHondaIHS;
