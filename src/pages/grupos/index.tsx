@@ -6,12 +6,15 @@ import { Range } from "../../components/atomos/Form/Range";
 import * as S from "./styles";
 import CustomTable from "../../components/atomos/Table";
 import { CgDetailsMore } from "react-icons/cg";
-import { Produto } from "../../types/catalogos";
+
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useEffect, useState } from "react";
 import { SolnascenteApi } from "../../service";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { Produto } from "types/catalogos";
+import { Loading } from "components/atomos/Loading";
+
 
 interface ITable {
   numero: string;
@@ -139,6 +142,8 @@ export function Grupos() {
           )}
         />
       </S.WrapperTable>
+
+
     </Template>
   );
 }

@@ -1,19 +1,10 @@
 import * as S from "./styles";
-import Lottie from "react-lottie";
+import Load from "../../../assets/svg/load.svg";
 
 export function Loading() {
-  const defaultOptions = {
-    loop: true,
-    autoplay: true,
-    animationData: "",
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
-  };
-
   return (
     <S.Wrapper>
-      <Lottie options={defaultOptions} height={400} width={400} />
+      <img src={Load} alt="Loagin" width={100} />
     </S.Wrapper>
   );
 }
