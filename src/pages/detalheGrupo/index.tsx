@@ -96,6 +96,7 @@ export function DetalheGrupo() {
   const [loading, setLoading] = useState(true);
   const [dataToken] = useLocalStorage("@dataToken");
   const [idsProdutos, setIdsProdutos] = useState<number[]>([]);
+  const [listaProdutos, setListaProdutos] = useState<IdetalheProduto[][]>([]);
   const [listaProdutosOptions, setListaProdutosOptions] = useState<
     SelectOpitionProps<IdetalheProduto>[]
   >([]);
@@ -115,12 +116,26 @@ export function DetalheGrupo() {
           codConcessionaria: dataToken?.retorno?.codEmpresa,
         })
       )
-    ).then((data) =>
-      data
-        .map((item) => item.status === "fulfilled" && item?.value?.data)
-        .filter((item) => typeof item !== "boolean")
-    );
+    )
+      .then((data) =>
+        data
+          .map((item) => item.status === "fulfilled" && item?.value?.data)
+          .filter((item) => typeof item !== "boolean")
+      )
+      .then((data) => setListaProdutos(data as IdetalheProduto[][]));
   }, [idsProdutos, dataToken]);
+
+  useEffect(() => {
+    if (!listaProdutos.length) return;
+
+    let temp: IdetalheProduto[] = [];
+    listaProdutos.forEach((e) => temp.push(...e));
+    const mySet = new Set();
+    selectParser(temp).forEach((item) => mySet.add(JSON.stringify(item)));
+
+    const listaUnicos = [...mySet].map((item) => JSON.parse(item as string));
+    setListaProdutosOptions(listaUnicos);
+  }, [listaProdutos]);
 
   function selectParser(
     data: IdetalheProduto[]
