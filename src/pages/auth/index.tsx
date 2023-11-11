@@ -8,7 +8,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { HondaIHS } from "service/hondaIHS";
 
 export function Auth() {
-  const { loginAuth } = useContextSite();
+  const { loginAuth, setIsLoad } = useContextSite();
   const [codUsuario, setCodUsuario] = useState("");
   const [codEmpresa, setCodEmpresa] = useState("");
   const [senha, setSenha] = useState("");
@@ -19,12 +19,13 @@ export function Auth() {
 
   function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
-
+    setIsLoad(true)
     isDisabled = true;
 
     HondaVendaDigital.Auth({ codUsuario, codEmpresa, senha })
       .then(({ data }) => {
         loginAuth(data);
+        setIsLoad(false)
       })
       .finally(() => (isDisabled = false));
   }
