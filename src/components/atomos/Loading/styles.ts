@@ -9,8 +9,13 @@ export const Wrapper = styled.div`
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 1;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  > span {
+    color: #fff;
+  }
 
   > svg,
   img {

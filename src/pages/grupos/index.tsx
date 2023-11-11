@@ -20,12 +20,7 @@ interface ITable {
   menoLance: string;
 }
 
-const data = [
-  { value: "1", label: "Finalizado" },
-  { value: "2", label: "Pendente" },
-  { value: "3", label: "Cancelado" },
-  { value: "4", label: "Digitadas" },
-];
+
 
 const dataTable = [
   {

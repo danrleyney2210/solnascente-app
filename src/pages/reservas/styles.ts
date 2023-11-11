@@ -14,7 +14,11 @@ export const ContentInputs = styled.div`
     align-items: center;
 
     .group-select {
+      margin-top: 15px;
       display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
       width: 100%;
     }
   }
@@ -25,3 +29,5 @@ export const ContentInputs = styled.div`
     }
   }
 `;
+
+export const WrapperTable = styled.div``;

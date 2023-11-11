@@ -5,6 +5,7 @@ export function Loading() {
   return (
     <S.Wrapper>
       <img src={Load} alt="Loagin" width={100} />
+      <span>Carregando...</span>
     </S.Wrapper>
   );
 }

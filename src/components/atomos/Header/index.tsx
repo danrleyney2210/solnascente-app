@@ -10,7 +10,7 @@ export function Header() {
   return (
     <S.Wrapper>
       <S.Container>
-        <S.ContentLogo onClick={() => navigate("/")}>
+        <S.ContentLogo onClick={() => navigate("/home")}>
           <FaUncharted fill="#dd002e" size={40} />
         </S.ContentLogo>
 
