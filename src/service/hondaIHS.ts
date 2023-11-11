@@ -1,21 +1,18 @@
 import { AxiosResponse } from "axios";
 import ApiHondaIHS from "Api/ApiHondaIHS";
+import { IAthIHS } from "types/authIHS";
 
-export type AuthProps = {
-  codUsuario: string;
+type HondaIHSAuthProps = {
   codEmpresa: string;
+  codUsuario: string;
   senha: string;
-  versaoApp?: string;
-  sistemaOperacional?: string;
+  captchaReponseKey: string;
+  token?: string;
 };
 
 export class HondaIHS {
-  static Auth(props: AuthProps): Promise<AxiosResponse<any>> {
-    const payload = {
-      versaoApp: "1.0.0",
-      sistemaOperacional: "DESKTOP",
-      ...props,
-    };
-    return ApiHondaIHS.get("");
+  static Auth(props: HondaIHSAuthProps): Promise<AxiosResponse<IAthIHS>> {
+    const payload = { ...props, token: "" };
+    return ApiHondaIHS.post("/login", payload);
   }
 }

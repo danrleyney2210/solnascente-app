@@ -5,6 +5,7 @@ import CustomInput from "../../components/atomos/Form/CustomInput";
 import { HondaVendaDigital } from "../../service/hondaVendaDigital";
 import { useContextSite } from "../../context/Context";
 import ReCAPTCHA from "react-google-recaptcha";
+import { HondaIHS } from "service/hondaIHS";
 
 export function Auth() {
   const { loginAuth } = useContextSite();
@@ -12,16 +13,12 @@ export function Auth() {
   const [codEmpresa, setCodEmpresa] = useState("");
   const [senha, setSenha] = useState("");
 
-  const [captcha, setCaptcha] = useState<string | null>("");
+  const [captchaReponseKey, setCaptchaReponseKey] = useState<string | null>("");
 
-  let isDisabled = !(codUsuario && codEmpresa && senha && captcha);
+  let isDisabled = !(codUsuario && codEmpresa && senha && captchaReponseKey);
 
   function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
-
-    console.log(captcha);
-
-    return;
 
     isDisabled = true;
 
@@ -59,12 +56,10 @@ export function Auth() {
 
           <ReCAPTCHA
             sitekey={process.env.REACT_APP_SITE_KEY}
-            onChange={(e) => setCaptcha(e)}
+            onChange={(e) => setCaptchaReponseKey(e)}
           />
 
-          <S.ButtonLogin type="submit" disabled={isDisabled}>
-            Continuar
-          </S.ButtonLogin>
+          <S.ButtonLogin type="submit">Continuar</S.ButtonLogin>
         </S.Form>
       </S.Content>
     </S.Wrapper>
