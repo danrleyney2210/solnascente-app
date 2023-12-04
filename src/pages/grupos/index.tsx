@@ -16,11 +16,41 @@ import { Produto } from "types/catalogos";
 import { read, utils } from "xlsx";
 
 import { Input } from "components/atomos/Form/CustomInput/styles";
+import CustomInputFile from "components/atomos/Form/CustomInputFile";
 
 interface ITable {
   numero: string;
   menoLance: string;
 }
+
+type dataTableType = {
+  Vencimento: string;
+  "Próxima Assembleia": string;
+  "CPF Vendedor": string;
+  Vendedor: string;
+  Grupo: string;
+  Cota: string;
+  R: string;
+  D: string;
+  Cliente: string;
+  Telefone1: string;
+  Telefone2: string;
+  "Tipo de Contrato": string;
+  "% Amortizado": string;
+  "% Quitação": string;
+  "Valor para Quitação": string;
+  "Maior Lance": string;
+  "Menor Lance": string;
+  "Assembleia Inicial": string;
+  Modelo: string;
+  "Status Contrato": string;
+  "Data da Venda": string;
+  Plano: string;
+  "Data de Contemplação": string;
+  UF: string;
+  Município: string;
+  "Seguro Vida": string;
+};
 
 const dataTable = [
   {
@@ -79,6 +109,8 @@ export function Grupos() {
   >([] as SelectOpitionProps<Produto>[]);
   const [produto, setProduto] = useState("");
   const [dataToken] = useLocalStorage("@dataToken");
+  const [tableTitle, setTableTitles] = useState<string[]>([]);
+  const [tableData, setTableData] = useState<string[][]>([]);
 
   const navigate = useNavigate();
 
@@ -115,16 +147,25 @@ export function Grupos() {
 
       /* generate array of presidents from the first worksheet */
       const ws = wb.Sheets[wb.SheetNames[0]]; // get the first worksheet
-      const data = utils.sheet_to_json(ws, {
+      const data = utils.sheet_to_json<string[]>(ws, {
         // skipHidden: true,
         raw: false,
         defval: "",
         header: 1,
       }); // generate objects
 
-      console.log(data);
+      setTableTitles(data[2]);
+      data.shift();
+      data.shift();
+      data.shift();
+      setTableData(data);
     }
   }
+
+  useEffect(() => {
+    console.log(tableTitle);
+    console.log(tableData);
+  }, [tableTitle, tableData]);
 
   return (
     <Template title={"Grupos"}>
@@ -142,7 +183,7 @@ export function Grupos() {
       </S.ContentInputs>
 
       <div>
-        <Input type="file" onChange={xlsxParser} />
+        <CustomInputFile onChange={xlsxParser} />
       </div>
 
       <S.WrapperTable>
