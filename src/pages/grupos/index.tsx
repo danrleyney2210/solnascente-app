@@ -110,7 +110,7 @@ export function Grupos() {
   const [produto, setProduto] = useState("");
   const [dataToken] = useLocalStorage("@dataToken");
   const [tableTitle, setTableTitles] = useState<string[]>([]);
-  const [tableData, setTableData] = useState<string[][]>([]);
+  const [tableData, setTableData] = useState<dataTableType[]>([]);
 
   const navigate = useNavigate();
 
@@ -154,18 +154,20 @@ export function Grupos() {
         header: 1,
       }); // generate objects
 
-      setTableTitles(data[2]);
+      const titles = data[2];
+      setTableTitles(titles);
+
       data.shift();
       data.shift();
       data.shift();
-      setTableData(data);
+
+      const t = data.map((item) =>
+        item.reduce((a, v, idx) => ({ ...a, [titles[idx]]: v }), {})
+      );
+
+      setTableData(t as dataTableType[]);
     }
   }
-
-  useEffect(() => {
-    console.log(tableTitle);
-    console.log(tableData);
-  }, [tableTitle, tableData]);
 
   return (
     <Template title={"Grupos"}>
@@ -183,7 +185,7 @@ export function Grupos() {
       </S.ContentInputs>
 
       <div>
-        <CustomInputFile onChange={xlsxParser} />
+        <CustomInputFile onChange={xlsxParser} accept=".xlsx" />
       </div>
 
       <S.WrapperTable>
