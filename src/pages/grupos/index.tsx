@@ -189,14 +189,15 @@ export function Grupos() {
       </div>
 
       <S.WrapperTable>
-        <CustomTable<ITable>
+        <CustomTable<dataTableType>
           titles={heardsTable}
-          data={dataTable}
+          // titles={tableTitle}
+          data={tableData}
           templateColumns="1fr 1fr 1fr"
           renderRow={(item, index) => (
             <>
-              <td>{item.numero}</td>
-              <td>{`${item.menoLance}`}</td>
+              <td>{item.Grupo}</td>
+              <td>{`${item["Menor Lance"]} %`}</td>
               <td onClick={() => detalhesGrupo()}>
                 <CgDetailsMore title="Detalhes" />
               </td>

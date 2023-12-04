@@ -2,8 +2,6 @@ import React, { useMemo, useState } from "react";
 import * as S from "./styles";
 import { CgDetailsMore } from "react-icons/cg";
 
-
-
 export type CustomTableTypes<T> = {
   titles: string[];
   data: T[];
@@ -11,13 +9,18 @@ export type CustomTableTypes<T> = {
   renderRow: (item: T, index: number) => React.ReactNode;
 };
 
-const CustomTable = <T,>({ data, titles, templateColumns, renderRow }: CustomTableTypes<T>) => {
+const CustomTable = <T,>({
+  data,
+  titles,
+  templateColumns,
+  renderRow,
+}: CustomTableTypes<T>) => {
   return (
     <S.WrapperContainer>
       <S.Table templateColumns={templateColumns}>
         <thead>
           <tr>
-            {titles?.length &&
+            {titles?.length > 0 &&
               titles.map((item, idx) => <th key={idx}>{item}</th>)}
           </tr>
         </thead>
