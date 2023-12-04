@@ -4,28 +4,25 @@ import { useState } from "react";
 import CustomInput from "../../components/atomos/Form/CustomInput";
 import { HondaVendaDigital } from "../../service/hondaVendaDigital";
 import { useContextSite } from "../../context/Context";
-import ReCAPTCHA from "react-google-recaptcha";
 import { HondaIHS } from "service/hondaIHS";
 
 export function Auth() {
   const { loginAuth, setIsLoad } = useContextSite();
-  const [codUsuario, setCodUsuario] = useState("");
-  const [codEmpresa, setCodEmpresa] = useState("");
-  const [senha, setSenha] = useState("");
+  const [codUsuario, setCodUsuario] = useState("ANDRE");
+  const [codEmpresa, setCodEmpresa] = useState("1014412");
+  const [senha, setSenha] = useState("Andre08@");
 
-  const [captchaReponseKey, setCaptchaReponseKey] = useState<string | null>("");
-
-  let isDisabled = !(codUsuario && codEmpresa && senha && captchaReponseKey);
+  let isDisabled = !(codUsuario && codEmpresa && senha);
 
   function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
-    setIsLoad(true)
+    setIsLoad(true);
     isDisabled = true;
 
     HondaVendaDigital.Auth({ codUsuario, codEmpresa, senha })
       .then(({ data }) => {
         loginAuth(data);
-        setIsLoad(false)
+        setIsLoad(false);
       })
       .finally(() => (isDisabled = false));
   }
@@ -42,25 +39,25 @@ export function Auth() {
           <CustomInput
             label="Codigo"
             value={codEmpresa}
+            defaultValue={codEmpresa}
             onChange={(e) => setCodEmpresa(e?.target?.value?.trim())}
           />
           <CustomInput
             label="Usuario"
             value={codUsuario}
+            defaultValue={codUsuario}
             onChange={(e) => setCodUsuario(e?.target?.value?.trim())}
           />
           <CustomInput
             value={senha}
             label="Senha"
+            defaultValue={senha}
             onChange={(e) => setSenha(e?.target?.value?.trim())}
           />
 
-          <ReCAPTCHA
-            sitekey={process.env.REACT_APP_SITE_KEY}
-            onChange={(e) => setCaptchaReponseKey(e)}
-          />
-
-          <S.ButtonLogin type="submit">Continuar</S.ButtonLogin>
+          <S.ButtonLogin type="submit" disabled={isDisabled}>
+            Continuar
+          </S.ButtonLogin>
         </S.Form>
       </S.Content>
     </S.Wrapper>

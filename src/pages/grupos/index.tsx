@@ -8,19 +8,19 @@ import CustomTable from "../../components/atomos/Table";
 import { CgDetailsMore } from "react-icons/cg";
 
 import { useLocalStorage } from "../../hooks/useLocalStorage";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { HondaVendaDigital } from "../../service/hondaVendaDigital";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Produto } from "types/catalogos";
-import { Loading } from "components/atomos/Loading";
+import { read, utils } from "xlsx";
+
+import { Input } from "components/atomos/Form/CustomInput/styles";
 
 interface ITable {
   numero: string;
   menoLance: string;
 }
-
-
 
 const dataTable = [
   {
@@ -105,6 +105,27 @@ export function Grupos() {
     }));
   }
 
+  async function xlsxParser(e: ChangeEvent<HTMLInputElement>) {
+    const f = e.target.files?.length && e.target.files[0];
+    if (f) {
+      const ab = await f.arrayBuffer();
+
+      /* parse */
+      const wb = read(ab);
+
+      /* generate array of presidents from the first worksheet */
+      const ws = wb.Sheets[wb.SheetNames[0]]; // get the first worksheet
+      const data = utils.sheet_to_json(ws, {
+        // skipHidden: true,
+        raw: false,
+        defval: "",
+        header: 1,
+      }); // generate objects
+
+      console.log(data);
+    }
+  }
+
   return (
     <Template title={"Grupos"}>
       <S.ContentInputs>
@@ -119,6 +140,10 @@ export function Grupos() {
         <Range label="Parcelas  mínimas" />
         <Range label="Parcelas  máximas" />
       </S.ContentInputs>
+
+      <div>
+        <Input type="file" onChange={xlsxParser} />
+      </div>
 
       <S.WrapperTable>
         <CustomTable<ITable>
