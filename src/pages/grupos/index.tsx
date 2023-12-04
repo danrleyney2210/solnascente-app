@@ -95,7 +95,8 @@ const dataTable = [
   },
 ];
 
-const heardsTable = ["Número", "Menor Lance", "Ações"];
+// const heardsTable = ["Número", "Menor Lance", "Ações"];
+const heardsTable = ["Cota", "Grupo", "Menor Lance", "Plano", "Ações"];
 
 export type SelectOpitionProps<T> = {
   value: any;
@@ -104,10 +105,10 @@ export type SelectOpitionProps<T> = {
 };
 
 export function Grupos() {
-  const [produtosOptions, setProdutooptions] = useState<
+  const [planoOptions, setPlanoOptions] = useState<
     SelectOpitionProps<Produto>[]
   >([] as SelectOpitionProps<Produto>[]);
-  const [produto, setProduto] = useState("");
+  const [plano, setPlano] = useState("");
   const [cota, setCota] = useState("");
   const [dataToken] = useLocalStorage("@dataToken");
   const [tableTitle, setTableTitles] = useState<string[]>([]);
@@ -179,7 +180,7 @@ export function Grupos() {
       options.forEach((item) => mySetItens.add(JSON.stringify(item)));
       options = [...mySetItens].map((item) => JSON.parse(item as string));
 
-      setProdutooptions(options);
+      setPlanoOptions(options);
     }
   }
 
@@ -193,11 +194,11 @@ export function Grupos() {
   }, [cota]);
 
   useEffect(() => {
-    if (!produto && tableDataTemp.length > 0) {
+    if (!plano && tableDataTemp.length > 0) {
       return setTableData(tableDataTemp);
     }
-    setTableData(() => tableDataTemp.filter((item) => item.Plano === produto));
-  }, [produto]);
+    setTableData(() => tableDataTemp.filter((item) => item.Plano === plano));
+  }, [plano]);
 
   return (
     <Template title={"Grupos"}>
@@ -211,10 +212,10 @@ export function Grupos() {
         />
         <SelectDrop
           label="Produto"
-          options={produtosOptions}
+          options={planoOptions}
           isClearable
-          value={produtosOptions.find((item) => item.value === produto)}
-          onChange={(e) => setProduto(e?.value)}
+          value={planoOptions.find((item) => item.value === plano)}
+          onChange={(e) => setPlano(e?.value)}
         />
         <Range label="Parcelas  mínimas" />
         <Range label="Parcelas  máximas" />
@@ -227,11 +228,13 @@ export function Grupos() {
           titles={heardsTable}
           // titles={tableTitle}
           data={tableData}
-          templateColumns="1fr 1fr 1fr"
+          templateColumns="1fr 1fr 1fr 1fr 1fr"
           renderRow={(item, index) => (
             <>
+              <td>{item.Cota}</td>
               <td>{item.Grupo}</td>
               <td>{`${item["Menor Lance"]} %`}</td>
+              <td>{item.Plano}</td>
               <td onClick={() => detalhesGrupo()}>
                 <CgDetailsMore title="Detalhes" />
               </td>
