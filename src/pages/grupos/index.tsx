@@ -100,7 +100,7 @@ const heardsTable = ["Número", "Menor Lance", "Ações"];
 export type SelectOpitionProps<T> = {
   value: any;
   label: string;
-  element: T;
+  element?: T;
 };
 
 export function Grupos() {
@@ -108,9 +108,11 @@ export function Grupos() {
     SelectOpitionProps<Produto>[]
   >([] as SelectOpitionProps<Produto>[]);
   const [produto, setProduto] = useState("");
+  const [cota, setCota] = useState("");
   const [dataToken] = useLocalStorage("@dataToken");
   const [tableTitle, setTableTitles] = useState<string[]>([]);
   const [tableData, setTableData] = useState<dataTableType[]>([]);
+  const [tableDataTemp, setTableDataTemp] = useState<dataTableType[]>([]);
 
   const navigate = useNavigate();
 
@@ -118,24 +120,24 @@ export function Grupos() {
     navigate("/grupos/detalhe");
   }
 
-  useEffect(() => {
-    const codEmpresa = dataToken?.retorno?.codEmpresa;
+  // useEffect(() => {
+  //   const codEmpresa = dataToken?.retorno?.codEmpresa;
 
-    if (!codEmpresa) return;
-    HondaVendaDigital.Catalogos({ codEmpresa })
-      .then(({ data }) =>
-        setProdutooptions(selectParser(data?.catalogoModelos?.produtos))
-      )
-      .catch((error) => toast.error("Erro na requisicao do catalogo"));
-  }, [dataToken]);
+  //   if (!codEmpresa) return;
+  //   HondaVendaDigital.Catalogos({ codEmpresa })
+  //     .then(({ data }) =>
+  //       setProdutooptions(selectParser(data?.catalogoModelos?.produtos))
+  //     )
+  //     .catch((error) => toast.error("Erro na requisicao do catalogo"));
+  // }, [dataToken]);
 
-  function selectParser(data: Produto[]): SelectOpitionProps<Produto>[] {
-    return data.map((item) => ({
-      label: item.dscProduto,
-      value: item.idProduto,
-      element: item,
-    }));
-  }
+  // function selectParser(data: Produto[]): SelectOpitionProps<Produto>[] {
+  //   return data.map((item) => ({
+  //     label: item.dscProduto,
+  //     value: item.idProduto,
+  //     element: item,
+  //   }));
+  // }
 
   async function xlsxParser(e: ChangeEvent<HTMLInputElement>) {
     const f = e.target.files?.length && e.target.files[0];
@@ -161,18 +163,52 @@ export function Grupos() {
       data.shift();
       data.shift();
 
-      const t = data.map((item) =>
+      const t: dataTableType[] = data.map((item) =>
         item.reduce((a, v, idx) => ({ ...a, [titles[idx]]: v }), {})
-      );
+      ) as dataTableType[];
 
-      setTableData(t as dataTableType[]);
+      setTableData(t);
+      setTableDataTemp(t);
+
+      let options = t.map((item) => ({
+        value: item.Plano,
+        label: item.Plano,
+      }));
+
+      const mySetItens = new Set();
+      options.forEach((item) => mySetItens.add(JSON.stringify(item)));
+      options = [...mySetItens].map((item) => JSON.parse(item as string));
+
+      setProdutooptions(options);
     }
   }
+
+  useEffect(() => {
+    if (!cota && tableDataTemp.length > 0) {
+      return setTableData(tableDataTemp);
+    }
+    setTableData(() =>
+      tableDataTemp.filter((item) => item.Cota.includes(cota))
+    );
+  }, [cota]);
+
+  useEffect(() => {
+    if (!produto && tableDataTemp.length > 0) {
+      return setTableData(tableDataTemp);
+    }
+    setTableData(() => tableDataTemp.filter((item) => item.Plano === produto));
+  }, [produto]);
 
   return (
     <Template title={"Grupos"}>
       <S.ContentInputs>
-        <InputText label="Cota" placeholder="Digite a Cota" type="number" />
+        <InputText
+          label="Cota"
+          placeholder="Digite a Cota"
+          type="number"
+          value={cota}
+          onChange={(e) => setCota(e?.target?.value)}
+        />
         <SelectDrop
           label="Produto"
           options={produtosOptions}
@@ -184,9 +220,7 @@ export function Grupos() {
         <Range label="Parcelas  máximas" />
       </S.ContentInputs>
 
-      <div>
-        <CustomInputFile onChange={xlsxParser} accept=".xlsx" />
-      </div>
+      <CustomInputFile onChange={xlsxParser} accept=".xlsx" />
 
       <S.WrapperTable>
         <CustomTable<dataTableType>
