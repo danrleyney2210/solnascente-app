@@ -32,7 +32,7 @@ const PaginationNew = ({
 
   useEffect(() => {
     if (
-      selectedElement < pages[0] ||
+      // selectedElement < pages[0] ||
       selectedElement > pages[pages.length - 1]
     ) {
       setPages(
@@ -41,7 +41,20 @@ const PaginationNew = ({
           .map((n, index) => selectedElement - index)
           .reverse()
       );
+      return;
     }
+
+    if (
+      selectedElement < pages[0]
+      // selectedElement > pages[pages.length - 1]
+    ) {
+      setPages(
+        new Array(maxPageNumbersDisplayed).fill(0).map((n, index) => n + index)
+      );
+
+      return;
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedElement]);
 
