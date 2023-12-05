@@ -17,6 +17,7 @@ import { read, utils } from "xlsx";
 
 import CustomInputFile from "components/atomos/Form/CustomInputFile";
 import { paginateArray } from "utils/pagination";
+import Pagination from "components/atomos/Pagination";
 
 interface ITable {
   numero: string;
@@ -71,8 +72,9 @@ export function Grupos() {
   const [tableTitle, setTableTitles] = useState<string[]>([]);
   const [tableData, setTableData] = useState<dataTableType[]>([]);
   const [tableDataTemp, setTableDataTemp] = useState<dataTableType[]>([]);
-  const [cont, setCont] = useState(1);
+  const [numberPage, setNumberPage] = useState(0);
   const size = 10;
+  const [totalPage, setTotalPage] = useState(0);
 
   const navigate = useNavigate();
 
@@ -127,9 +129,10 @@ export function Grupos() {
 
       const temp = paginateArray({
         array: t,
-        page_number: cont,
+        page_number: numberPage,
         page_size: size,
       });
+
       setTableData(temp);
       setTableDataTemp(t);
 
@@ -143,6 +146,8 @@ export function Grupos() {
       options = [...mySetItens].map((item) => JSON.parse(item as string));
 
       setPlanoOptions(options);
+
+      setTotalPage(Math.round(t.length / size));
     }
   }
 
@@ -150,31 +155,36 @@ export function Grupos() {
     let temp = [];
 
     if (plano) {
+      const filter = tableDataTemp.filter((item) => item.Plano === plano);
       temp = paginateArray({
-        array: tableDataTemp.filter((item) => item.Plano === plano),
-        page_number: cont,
+        array: filter,
+        page_number: numberPage,
         page_size: size,
       });
+      setTotalPage(Math.round(filter.length / size));
     }
 
     if (cota) {
+      const filter = tableDataTemp.filter((item) => item.Cota.includes(cota));
       temp = paginateArray({
-        array: tableDataTemp.filter((item) => item.Cota.includes(cota)),
-        page_number: cont,
+        array: filter,
+        page_number: numberPage,
         page_size: size,
       });
+      setTotalPage(Math.round(filter.length / size));
     }
 
     if (!plano && !cota) {
       temp = paginateArray({
         array: tableDataTemp,
-        page_number: cont,
+        page_number: numberPage,
         page_size: size,
       });
+      setTotalPage(Math.round(tableDataTemp.length / size));
     }
 
     setTableData(temp);
-  }, [cont, plano, cota]);
+  }, [numberPage, plano, cota]);
 
   return (
     <Template title={"Grupos"}>
@@ -186,7 +196,7 @@ export function Grupos() {
           value={cota}
           onChange={(e) => {
             setCota(e?.target?.value);
-            setCont(1);
+            setNumberPage(0);
           }}
         />
         <SelectDrop
@@ -197,14 +207,16 @@ export function Grupos() {
           value={planoOptions.find((item) => item.value === plano)}
           onChange={(e) => {
             setPlano(e?.value);
-            setCont(1);
+            setNumberPage(0);
           }}
         />
         <Range label="Parcelas  mínimas" />
         <Range label="Parcelas  máximas" />
       </S.ContentInputs>
 
-      <CustomInputFile onChange={xlsxParser} accept=".xlsx" />
+      <S.WrapperInputFile>
+        <CustomInputFile onChange={xlsxParser} accept=".xlsx" />
+      </S.WrapperInputFile>
 
       <S.WrapperTable>
         <CustomTable<dataTableType>
@@ -224,8 +236,13 @@ export function Grupos() {
           )}
         />
       </S.WrapperTable>
-      <button onClick={() => setCont((prev) => prev + 1)}>Teste</button>
-      <span>{cont}</span>
+      <Pagination
+        key={totalPage}
+        totalPage={totalPage}
+        totalRegister={tableData.length}
+        actualPage={numberPage}
+        setNumberPage={setNumberPage}
+      />
     </Template>
   );
 }

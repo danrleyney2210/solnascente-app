@@ -29,3 +29,7 @@ export const ContentInputs = styled.div`
 `;
 
 export const WrapperTable = styled.div``;
+
+export const WrapperInputFile = styled.div`
+  margin: 10px 0 40px 0;
+`;
