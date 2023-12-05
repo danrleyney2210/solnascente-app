@@ -15,8 +15,8 @@ import { useNavigate } from "react-router-dom";
 import { Produto } from "types/catalogos";
 import { read, utils } from "xlsx";
 
-import { Input } from "components/atomos/Form/CustomInput/styles";
 import CustomInputFile from "components/atomos/Form/CustomInputFile";
+import { paginateArray } from "utils/pagination";
 
 interface ITable {
   numero: string;
@@ -52,49 +52,6 @@ type dataTableType = {
   "Seguro Vida": string;
 };
 
-const dataTable = [
-  {
-    numero: "42753",
-    menoLance: "1.35",
-  },
-  {
-    numero: "42753",
-    menoLance: "2.63",
-  },
-  {
-    numero: "42753",
-    menoLance: "2.81",
-  },
-  {
-    numero: "42753",
-    menoLance: "2.83",
-  },
-  {
-    numero: "42753",
-    menoLance: "2.94",
-  },
-  {
-    numero: "42753",
-    menoLance: "2.95",
-  },
-  {
-    numero: "42753",
-    menoLance: "3.00",
-  },
-  {
-    numero: "42753",
-    menoLance: "1.35",
-  },
-  {
-    numero: "42753",
-    menoLance: "3.05",
-  },
-  {
-    numero: "42753",
-    menoLance: "3.07",
-  },
-];
-
 // const heardsTable = ["Número", "Menor Lance", "Ações"];
 const heardsTable = ["Cota", "Grupo", "Menor Lance", "Plano", "Ações"];
 
@@ -114,6 +71,8 @@ export function Grupos() {
   const [tableTitle, setTableTitles] = useState<string[]>([]);
   const [tableData, setTableData] = useState<dataTableType[]>([]);
   const [tableDataTemp, setTableDataTemp] = useState<dataTableType[]>([]);
+  const [cont, setCont] = useState(1);
+  const size = 10;
 
   const navigate = useNavigate();
 
@@ -145,17 +104,15 @@ export function Grupos() {
     if (f) {
       const ab = await f.arrayBuffer();
 
-      /* parse */
       const wb = read(ab);
 
-      /* generate array of presidents from the first worksheet */
-      const ws = wb.Sheets[wb.SheetNames[0]]; // get the first worksheet
+      const ws = wb.Sheets[wb.SheetNames[0]];
       const data = utils.sheet_to_json<string[]>(ws, {
         // skipHidden: true,
         raw: false,
         defval: "",
         header: 1,
-      }); // generate objects
+      });
 
       const titles = data[2];
       setTableTitles(titles);
@@ -165,10 +122,15 @@ export function Grupos() {
       data.shift();
 
       const t: dataTableType[] = data.map((item) =>
-        item.reduce((a, v, idx) => ({ ...a, [titles[idx]]: v }), {})
+        item.reduce((acc, v, idx) => ({ ...acc, [titles[idx]]: v }), {})
       ) as dataTableType[];
 
-      setTableData(t);
+      const temp = paginateArray({
+        array: t,
+        page_number: cont,
+        page_size: size,
+      });
+      setTableData(temp);
       setTableDataTemp(t);
 
       let options = t.map((item) => ({
@@ -185,20 +147,34 @@ export function Grupos() {
   }
 
   useEffect(() => {
-    if (!cota && tableDataTemp.length > 0) {
-      return setTableData(tableDataTemp);
-    }
-    setTableData(() =>
-      tableDataTemp.filter((item) => item.Cota.includes(cota))
-    );
-  }, [cota]);
+    let temp = [];
 
-  useEffect(() => {
-    if (!plano && tableDataTemp.length > 0) {
-      return setTableData(tableDataTemp);
+    if (plano) {
+      temp = paginateArray({
+        array: tableDataTemp.filter((item) => item.Plano === plano),
+        page_number: cont,
+        page_size: size,
+      });
     }
-    setTableData(() => tableDataTemp.filter((item) => item.Plano === plano));
-  }, [plano]);
+
+    if (cota) {
+      temp = paginateArray({
+        array: tableDataTemp.filter((item) => item.Cota.includes(cota)),
+        page_number: cont,
+        page_size: size,
+      });
+    }
+
+    if (!plano && !cota) {
+      temp = paginateArray({
+        array: tableDataTemp,
+        page_number: cont,
+        page_size: size,
+      });
+    }
+
+    setTableData(temp);
+  }, [cont, plano, cota]);
 
   return (
     <Template title={"Grupos"}>
@@ -208,14 +184,21 @@ export function Grupos() {
           placeholder="Digite a Cota"
           type="number"
           value={cota}
-          onChange={(e) => setCota(e?.target?.value)}
+          onChange={(e) => {
+            setCota(e?.target?.value);
+            setCont(1);
+          }}
         />
         <SelectDrop
-          label="Produto"
+          label="Plano"
           options={planoOptions}
           isClearable
+          placeholder="Selecione"
           value={planoOptions.find((item) => item.value === plano)}
-          onChange={(e) => setPlano(e?.value)}
+          onChange={(e) => {
+            setPlano(e?.value);
+            setCont(1);
+          }}
         />
         <Range label="Parcelas  mínimas" />
         <Range label="Parcelas  máximas" />
@@ -226,7 +209,6 @@ export function Grupos() {
       <S.WrapperTable>
         <CustomTable<dataTableType>
           titles={heardsTable}
-          // titles={tableTitle}
           data={tableData}
           templateColumns="1fr 1fr 1fr 1fr 1fr"
           renderRow={(item, index) => (
@@ -242,6 +224,8 @@ export function Grupos() {
           )}
         />
       </S.WrapperTable>
+      <button onClick={() => setCont((prev) => prev + 1)}>Teste</button>
+      <span>{cont}</span>
     </Template>
   );
 }
