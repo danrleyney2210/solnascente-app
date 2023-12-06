@@ -147,7 +147,7 @@ export function Grupos() {
 
       setPlanoOptions(options);
 
-      setTotalPage(Math.round(t.length / size));
+      setTotalPage(Math.ceil(t.length / size));
     }
   }
 
@@ -161,7 +161,7 @@ export function Grupos() {
         page_number: numberPage,
         page_size: size,
       });
-      setTotalPage(Math.round(filter.length / size));
+      setTotalPage(Math.ceil(filter.length / size));
     }
 
     if (cota) {
@@ -171,7 +171,8 @@ export function Grupos() {
         page_number: numberPage,
         page_size: size,
       });
-      setTotalPage(Math.round(filter.length / size));
+
+      setTotalPage(Math.ceil(filter.length / size));
     }
 
     if (!plano && !cota) {
@@ -180,7 +181,7 @@ export function Grupos() {
         page_number: numberPage,
         page_size: size,
       });
-      setTotalPage(Math.round(tableDataTemp.length / size));
+      setTotalPage(Math.ceil(tableDataTemp.length / size));
     }
 
     setTableData(temp);
